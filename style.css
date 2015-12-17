@@ -4,3 +4,9 @@ td {
   padding: 0;
   margin: 0;
 }
+
+table {
+  width: 1380px;
+  min-width: 1380px;
+  table-layout: fixed;
+}
