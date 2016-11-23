@@ -65,9 +65,20 @@ function currentPos() {
   };
 };
 
-var pressKey = function(e) {
-  var currentPosition = locate();
+var direction;
+var lastKeyPressed;
+var started = false;
+function pressKey(f) {
 
+  direction = f;
+  if(!started) {
+    window.setInterval(function(){snakeMove(direction)}, 500);
+    started = true;
+  };
+}; 
+function snakeMove(e){
+  var currentPosition = locate();
+  
   if (e.keyCode === 40) {
     //alert("down")
     currentPos();
@@ -76,7 +87,7 @@ var pressKey = function(e) {
     var currPosIdLetter = currentPositionElTdId.charAt(0);
     var currPosIdNumber1 = currentPositionElTdId.charAt(1);
     var currPosIdNumber2 = currentPositionElTdId.charAt(2);
-    var currPosArrayIndex =  colAlphabetArray.indexOf(currPosIdLetter);
+    var currPosArrayIndex = colAlphabetArray.indexOf(currPosIdLetter);
     var newPosArrayIndex = currPosArrayIndex + 1;
     var newPositionId = colAlphabetArray[newPosArrayIndex] + currPosIdNumber1 + currPosIdNumber2;
     var newPosition = document.getElementById(newPositionId);
@@ -88,12 +99,14 @@ var pressKey = function(e) {
     };
 
     newPosition.style.backgroundColor = "#000";
-    currentPositionElTd.style.backgroundColor = "#FFF";
- 
- 
+    currentPositionElTd.style.backgroundColor = "#FFF"; 
+    lastKeyPressed = e.keyCode
+    console.log(lastKeyPressed);
+
   } else if (e.keyCode === 38) {
     //alert("up")
     currentPos();
+
     var currentPositionElTdId = currentPositionElTd.id;
     var currPosIdLetter = currentPositionElTdId.charAt(0);
     var currPosIdNumber1 = currentPositionElTdId.charAt(1);
@@ -102,7 +115,8 @@ var pressKey = function(e) {
     var newPosArrayIndex = currPosArrayIndex - 1;
     var newPositionId = colAlphabetArray[newPosArrayIndex] + currPosIdNumber1 + currPosIdNumber2;
     var newPosition = document.getElementById(newPositionId);
-    
+
+
     if (newPosArrayIndex < 0) {
       alert("death!");
       document.location.reload(true);
@@ -110,7 +124,9 @@ var pressKey = function(e) {
     };
 
     newPosition.style.backgroundColor = "#000";
-    currentPositionElTd.style.backgroundColor = "#FFF";
+    currentPositionElTd.style.backgroundColor = "#FFF"; 
+    lastKeyPressed = e.keyCode
+    console.log(lastKeyPressed);
 
   } else if (e.keyCode === 37) {
     //alert("left")
@@ -132,7 +148,9 @@ var pressKey = function(e) {
     };
 
     newPosition.style.backgroundColor = "#000";
-    currentPositionElTd.style.backgroundColor = "#FFF";
+    currentPositionElTd.style.backgroundColor = "#FFF"; 
+    lastKeyPressed = e.keyCode
+    console.log(lastKeyPressed);
 
   
   } else if (e.keyCode === 39) {
@@ -155,9 +173,11 @@ var pressKey = function(e) {
     };
 
     newPosition.style.backgroundColor = "#000";
-    currentPositionElTd.style.backgroundColor = "#FFF";
+    currentPositionElTd.style.backgroundColor = "#FFF"; 
+    lastKeyPressed = e.keyCode
+    console.log(lastKeyPressed);
   } else {
     //alert(e.keyCode)
   };
 }; 
-window.addEventListener("keydown", pressKey)
+window.addEventListener("keydown", pressKey);
