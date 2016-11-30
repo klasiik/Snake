@@ -70,9 +70,27 @@ var lastKeyPressed;
 var started = false;
 function pressKey(f) {
 
+  if (typeof direction !== 'undefined') {
+    if (direction.keyCode === 40 && f.keyCode === 38) {
+      return
+    };
+
+    if (direction.keyCode === 38 && f.keyCode === 40) {
+      return
+    };
+
+    if (direction.keyCode === 37 && f.keyCode === 39) {
+      return
+    };
+
+    if (direction.keyCode === 39 && f.keyCode === 37) {
+      return
+    };
+  }
+
   direction = f;
-  if(!started) {
-    window.setInterval(function(){snakeMove(direction)}, 500);
+  if (!started) {
+    window.setInterval(function(){snakeMove(direction)}, 300);
     started = true;
   };
 }; 
@@ -99,9 +117,7 @@ function snakeMove(e){
     };
 
     newPosition.style.backgroundColor = "#000";
-    currentPositionElTd.style.backgroundColor = "#FFF"; 
-    lastKeyPressed = e.keyCode
-    console.log(lastKeyPressed);
+    currentPositionElTd.style.backgroundColor = "#FFF";
 
   } else if (e.keyCode === 38) {
     //alert("up")
@@ -111,7 +127,7 @@ function snakeMove(e){
     var currPosIdLetter = currentPositionElTdId.charAt(0);
     var currPosIdNumber1 = currentPositionElTdId.charAt(1);
     var currPosIdNumber2 = currentPositionElTdId.charAt(2);
-    var currPosArrayIndex =  colAlphabetArray.indexOf(currPosIdLetter);
+    var currPosArrayIndex = colAlphabetArray.indexOf(currPosIdLetter);
     var newPosArrayIndex = currPosArrayIndex - 1;
     var newPositionId = colAlphabetArray[newPosArrayIndex] + currPosIdNumber1 + currPosIdNumber2;
     var newPosition = document.getElementById(newPositionId);
@@ -125,8 +141,6 @@ function snakeMove(e){
 
     newPosition.style.backgroundColor = "#000";
     currentPositionElTd.style.backgroundColor = "#FFF"; 
-    lastKeyPressed = e.keyCode
-    console.log(lastKeyPressed);
 
   } else if (e.keyCode === 37) {
     //alert("left")
@@ -148,9 +162,7 @@ function snakeMove(e){
     };
 
     newPosition.style.backgroundColor = "#000";
-    currentPositionElTd.style.backgroundColor = "#FFF"; 
-    lastKeyPressed = e.keyCode
-    console.log(lastKeyPressed);
+    currentPositionElTd.style.backgroundColor = "#FFF";
 
   
   } else if (e.keyCode === 39) {
@@ -174,10 +186,23 @@ function snakeMove(e){
 
     newPosition.style.backgroundColor = "#000";
     currentPositionElTd.style.backgroundColor = "#FFF"; 
-    lastKeyPressed = e.keyCode
-    console.log(lastKeyPressed);
   } else {
     //alert(e.keyCode)
   };
+  
+  lastKeyPressed = e.keyCode
 }; 
 window.addEventListener("keydown", pressKey);
+
+//Food
+var randomCell
+function generateFood() {
+  for (i = 0; i < cellArray.length; i++) {
+    if (cellArray[i].style.backgroundColor === "rgb(144, 238, 144)") {
+      cellArray[i].style.backgroundColor = "#FFF"
+    };
+  };
+  randomCell = cellArray[Math.floor(Math.random()*cellArray.length)];
+  randomCell.style.backgroundColor = "#90EE90";
+};
+window.setInterval(generateFood, 7000);
